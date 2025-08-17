@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Appointment List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+</head>
+<body>
+    <div class="container">
+        <h2>Appointments</h2>
+        <a href="/appointments/new" class="btn btn-success">Add Appointment</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Patient</th>
+                    <th>Doctor</th>
+                    <th>Date</th>
+					<th>Blood Pressure</th>
+					<th>Symptoms</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="appointment : ${appointments}">
+                    <td th:text="${appointment.id}"></td>
+                    <td th:text="${appointment.patient.name}"></td>
+                    <td th:text="${appointment.doctor.name}"></td>
+                    <td th:text="${appointment.appointmentDate}"></td>
+					<td th:text="${appointment.bp}"></td>
+					<td th:text="${appointment.symptom}"></td>
+                    <td th:text="${appointment.status}"></td>
+                    <td>
+                        <a th:href="@{/appointments/edit/{id}(id=${appointment.id})}" class="btn btn-primary">Edit</a>
+                        <a th:href="@{/appointments/delete/{id}(id=${appointment.id})}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <a href="/" class="btn btn-secondary">Back to Home</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Doctor Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+</head>
+<body>
+    <div class="container">
+        <h2 th:if="${doctor.id == null}">Add Doctor</h2>
+        <h2 th:if="${doctor.id != null}">Edit Doctor</h2>
+        <form th:action="@{/doctors/save}" th:object="${doctor}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" th:field="*{name}" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label>Specialty</label>
+                <input type="text" th:field="*{specialty}" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label>Contact Number</label>
+                <input type="text" th:field="*{contactNumber}" class="form-control"/>
+            </div>
+            <button type="submit" class="btn btn-success">Save</button>
+            <a href="/doctors" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>

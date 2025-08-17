@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Patient List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+</head>
+<body>
+    <div class="container">
+        <h2>Patients</h2>
+        <a href="/patients/new" class="btn btn-success">Add Patient</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Contact</th>
+                    <th>Room</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="patient : ${patients}">
+                    <td th:text="${patient.id}"></td>
+                    <td th:text="${patient.name}"></td>
+                    <td th:text="${patient.age}"></td>
+                    <td th:text="${patient.gender}"></td>
+                    <td th:text="${patient.contactNumber}"></td>
+                    <td th:text="${patient.room?.roomNumber} ?: 'Not Assigned'"></td>
+                    <td>
+                        <a th:href="@{/patients/edit/{id}(id=${patient.id})}" class="btn btn-primary">Edit</a>
+                        <a th:href="@{/patients/delete/{id}(id=${patient.id})}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <a href="/" class="btn btn-secondary">Back to Home</a>
+    </div>
+</body>
+</html>
