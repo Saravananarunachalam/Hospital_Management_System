@@ -3,39 +3,201 @@
 <head>
     <title>Patient List</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <style>
+        body {
+            background: linear-gradient(135deg, #eceff1 0%, #f5f7fa 100%);
+            font-family: 'Roboto', sans-serif;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+        }
+        .navbar {
+            background: linear-gradient(90deg, #2c3e50, #3498db);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 10px 20px;
+        }
+        .navbar-brand {
+            font-weight: 700;
+            color: #ffffff !important;
+            font-size: 1.5rem;
+        }
+        .logout-btn {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            background-color: #e74c3c;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 20px;
+            font-weight: 500;
+            color: #ffffff;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .logout-btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            background: #ffffff;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #3498db, #8e44ad);
+        }
+        h2 {
+            color: #2c3e50;
+            font-weight: 700;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 2rem;
+        }
+        .table {
+            border-radius: 10px;
+            overflow: hidden;
+            background: #fafafa;
+        }
+        .table thead {
+            background: linear-gradient(90deg, #3498db, #2980b9);
+            color: #ffffff;
+        }
+        .table th, .table td {
+            padding: 15px;
+            vertical-align: middle;
+            text-align: center;
+            border: none;
+        }
+        .table tbody tr {
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .table tbody tr:hover {
+            background-color: #e8f4ff;
+            transform: scale(1.01);
+        }
+        .btn-success, .btn-primary, .btn-danger, .btn-secondary {
+            border-radius: 20px;
+            padding: 8px 20px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .btn-success {
+            background: #27ae60;
+            border: none;
+        }
+        .btn-success:hover {
+            background: #219653;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .btn-primary {
+            background: #2980b9;
+            border: none;
+        }
+        .btn-primary:hover {
+            background: #1f618d;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .btn-danger {
+            background: #e74c3c;
+            border: none;
+        }
+        .btn-danger:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .btn-secondary {
+            background: #7f8c8d;
+            border: none;
+        }
+        .btn-secondary:hover {
+            background: #6c757d;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .action-buttons a {
+            margin: 0 5px;
+        }
+        .button-group {
+            margin-top: 20px;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .table th, .table td {
+                font-size: 14px;
+                padding: 10px;
+            }
+            .action-buttons a {
+                display: inline-block;
+                margin-bottom: 8px;
+            }
+            .logout-btn {
+                padding: 6px 15px;
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
 <body>
+    <nav class="navbar">
+        <a class="navbar-brand" href="/">HMS Dashboard</a>
+        <a href="/login" class="logout-btn">Logout</a>
+    </nav>
     <div class="container">
-        <h2>Patients</h2>
-        <a href="/patients/new" class="btn btn-success">Add Patient</a>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Gender</th>
-                    <th>Contact</th>
-                    <th>Room</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="patient : ${patients}">
-                    <td th:text="${patient.id}"></td>
-                    <td th:text="${patient.name}"></td>
-                    <td th:text="${patient.age}"></td>
-                    <td th:text="${patient.gender}"></td>
-                    <td th:text="${patient.contactNumber}"></td>
-                    <td th:text="${patient.room?.roomNumber} ?: 'Not Assigned'"></td>
-                    <td>
-                        <a th:href="@{/patients/edit/{id}(id=${patient.id})}" class="btn btn-primary">Edit</a>
-                        <a th:href="@{/patients/delete/{id}(id=${patient.id})}" class="btn btn-danger">Delete</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <a href="/" class="btn btn-secondary">Back to Home</a>
+        <div class="card">
+            <h2>Patient List</h2>
+            <a href="/patients/new" class="btn btn-success mb-3">Add Patient</a>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Weight</th>
+                        <th>Contact</th>
+                        <th>Address</th>
+                        <th>Room</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="patient : ${patients}">
+                        <td th:text="${patient.id}"></td>
+                        <td th:text="${patient.name}"></td>
+                        <td th:text="${patient.age}"></td>
+                        <td th:text="${patient.gender}"></td>
+                        <td th:text="${patient.weight}"></td>
+                        <td th:text="${patient.contactNumber}"></td>
+                        <td th:text="${patient.address}"></td>
+                        <td th:text="${patient.room?.roomNumber} ?: 'Not Assigned'"></td>
+                        <td class="action-buttons">
+                            <a th:href="@{/patients/edit/{id}(id=${patient.id})}" class="btn btn-primary">Edit</a>
+                            <a th:href="@{/patients/delete/{id}(id=${patient.id})}" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="button-group">
+                <a href="/" class="btn btn-secondary">Back to Home</a>
+            </div>
+        </div>
     </div>
 </body>
 </html>
